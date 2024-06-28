@@ -1,0 +1,19 @@
+<form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+  <div class="mb-4">
+    <label class="block mb-2">User Password</label>
+    <input type="password" formControlName="password" placeholder="Enter your new password"
+           class="w-full p-2 border rounded">
+  </div>
+
+  <div class="mb-4">
+    <label class="block mb-2">Confirm Password</label>
+    <input type="password" formControlName="confirmPassword" placeholder="Re-enter your new password"
+           class="w-full p-2 border rounded">
+  </div>
+
+  <div>
+    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded"
+            [disabled]="!settingsForm.valid">Save Changes</button>
+  </div>
+</form>
