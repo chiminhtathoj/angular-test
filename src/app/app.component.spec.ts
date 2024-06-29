@@ -1,29 +1,55 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers:[
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
   });
 
   it(`should have the 'first_angular' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('first_angular');
+    expect(component.title).toEqual('first_angular');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, first_angular');
+  describe('Header', () => {
+    it('should have the correct structure', () => {
+      const header = fixture.debugElement.query(By.css('.header'));
+      expect(header).toBeTruthy();
+      expect(header.classes['flex']).toBeTruthy();
+      expect(header.classes['items-center']).toBeTruthy();
+      expect(header.classes['justify-end']).toBeTruthy();
+      expect(header.classes['bg-main-blue']).toBeTruthy();
+    });
+
+    it('should display the correct welcome message', () => {
+      const welcomeText = fixture.debugElement.query(By.css('.header span:first-child'));
+      expect(welcomeText.nativeElement.textContent.trim()).toBe('Welcome');
+    });
+
+    it('should display the correct email', () => {
+      const emailText = fixture.debugElement.query(By.css('.header span:last-child'));
+      expect(emailText.nativeElement.textContent.trim()).toBe('hello@demo.com');
+    });
   });
 });

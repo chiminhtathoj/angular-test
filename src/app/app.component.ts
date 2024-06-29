@@ -10,5 +10,5 @@ import { UserSettingsFormComponent } from './user-settings-form/user-settings-fo
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'user-settings-app';
+  title = 'first_angular';
 }
